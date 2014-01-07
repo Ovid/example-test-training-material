@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-package Math;
+package Ovid::Math;
 
 use base 'Exporter';
 
