@@ -5,9 +5,7 @@ use inc::Module::Install;
 name 'Ovid';
 version 1.0;
 
-requires 'DateTime'               => '0.23';
-test_requires 'Test::Most'        => '0.08';
-test_requires 'Test::Class::Most' => '0.30';
+test_requires 'Test::More' => '0.96';
 
 auto_install;
 WriteAll;
