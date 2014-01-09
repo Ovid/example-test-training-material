@@ -15,4 +15,9 @@ my $now = $module->now;
 like $now->as_string, qr/^\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d$/,
   '... and now() should return something resembling a datetime string';
 
+diag 'Write can_ok() tests and make the following tests pass';
+# there is a deliberate bug here
+my $datetime = Ovid::DateTime::Tiny->DateTime;
+isa_ok $datetime, $module;
+
 done_testing;
