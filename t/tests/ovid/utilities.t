@@ -2,18 +2,14 @@ use Test::More;
 
 use Ovid::Utilities qw(red green);
 
-die <<'END';
-This test needs to skip if we are on Windows
-    ($^O is 'MSWin32')
-
-Note that $^O has a capital "oh", not a zero
-
-Or we're not running via prove's verbose mode
-    $ENV{TEST_VERBOSE} is true
-END
-
-confirm( red("Is this text red?") );
-confirm( green("Is this text green?") );
+SKIP: {
+    skip "ANSI color codes not supported on Windows", 2
+      if 'MSWin32' eq $^O;
+    skip "Skipping manual confirmation because test is not verbose", 2
+      unless $ENV{TEST_VERBOSE};
+    confirm( red("Is this text red?") );
+    confirm( green("Is this text green?") );
+}
 
 sub confirm {
     my $text = shift;
