@@ -29,3 +29,15 @@ BEGIN {
 }
 
 done_testing;
+
+__END__
+
+=head1 NAME
+
+t/00-load.t - Test that we can load all of our modules
+
+=head1 DESCRIPTION
+
+This is a simple test that searches for all modules in the C<lib> directory
+and attempts to load them. If it cannot, C<BAIL_OUT()> will be called to halt
+the test suite because we assume that there is something fundamentally broken.
