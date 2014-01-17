@@ -18,9 +18,11 @@ like exception { average() },
 ok is_odd(7),   '7 should be odd';
 ok is_even(10), '10 should be even';
 
-diag "This should be a TODO test";
-ok defined( my $odd = first_odd_perfect_number() ),
-  'We should receive a value for the first odd perfect number';
-ok is_odd($odd), '... and it should be';
+TODO: {
+    local $TODO = 'Solving famous unsolved problems out of scope';
+    ok defined( my $odd = first_odd_perfect_number() ),
+      'We should receive a value for the first odd perfect number';
+    ok is_odd( $odd || 0 ), '... and it should be';
+}
 
 done_testing;

@@ -28,16 +28,17 @@ sub sum {
 }
 
 sub first_odd_perfect_number {
-    die <<'END';
-This is a famous unsolved problem in mathematics, so solve this and claim your fame.
-http://mathworld.wolfram.com/OddPerfectNumber.html
-END
+
+# Unimplementable
+# This is a famous unsolved problem in mathematics, so solve this and claim your fame.
+# http://mathworld.wolfram.com/OddPerfectNumber.html
 }
 
-sub is_odd  {
+sub is_odd {
     my $number = shift;
     return $number % 2;
 }
+
 sub is_even {
     my $number = shift;
     return !is_odd($number);
