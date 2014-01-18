@@ -23,7 +23,7 @@ sub roll_dice {
     my $times   = $arg_for->{times} || 1;
     return reduce(
         sub { $_[0] + $_[1] },
-        ( 1 + int( rand($sides) ) ) x $times
+        map { 1 + int rand $sides } 1 .. $times
     );
 }
 
