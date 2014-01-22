@@ -12,6 +12,7 @@ test_requires 'Sub::Override'    => '0.09';
 test_requires 'Test::Exception'  => '0.32';
 test_requires 'Test::Fatal'      => '0.013';
 test_requires 'Test::More'       => '0.96';
+test_requires 'Test::Most'       => '0.31';
 
 auto_install;
 WriteAll;
