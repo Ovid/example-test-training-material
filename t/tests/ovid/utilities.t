@@ -1,4 +1,4 @@
-use Test::More;
+use Test::Most;
 
 use Ovid::Utilities qw(red green);
 

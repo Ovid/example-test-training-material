@@ -1,7 +1,4 @@
-use strict;
-use warnings;
-
-use Test::More;
+use Test::Most;
 eval "use Ovid::Telepathy";
 
 # Oridinarily we'd print the error message too ($@), but we want our test

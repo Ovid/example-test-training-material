@@ -1,7 +1,4 @@
-use strict;
-use warnings;
-
-use Test::More;
+use Test::Most;
 use Test::Fatal;
 
 use Ovid::Exam1 ':all';

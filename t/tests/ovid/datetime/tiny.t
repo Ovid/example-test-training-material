@@ -1,4 +1,4 @@
-use Test::More;
+use Test::Most;
 use Ovid::DateTime::Tiny;
 use Sub::Override;
 my $module = 'Ovid::DateTime::Tiny';
@@ -25,7 +25,7 @@ while ( my ( $method, $value ) = each %args_for_now ) {
     is $now->$method, $value, "$method should return the correct value";
 }
 
-my $datetime = $now->DateTime;
+$datetime = $now->DateTime;
 isa_ok $datetime, 'DateTime';
 foreach (keys %args_for_now) {
     is $datetime->$_, $now->$_,
