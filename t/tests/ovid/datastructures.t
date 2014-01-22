@@ -1,5 +1,6 @@
 use Test::More;
 use Test::Differences;
+use Test::Deep;
 
 use Ovid::DataStructures qw(:all);
 
@@ -12,5 +13,32 @@ my %expected = (
 );
 
 eq_or_diff from_json($json), \%expected, 'JSON should deserialize correctly';
+eq_or_diff get_customer('unknown'), {},
+  'get_customer() should return an empty hashref for unknown customers';
+
+my %expected = (
+    customer_id => re('^\d{6}'),
+    name        => code( \&non_empty_string ),
+    age         => code( sub { shift >= 21 } ),
+);
+
+diag <<'END';
+
+We have four failing tests here. Your task is to read through the
+documentation of Test::Deep to figure out how to make these tests pass.
+
+Don't use re() to match the "active" value in the returned data structure.
+
+END
+foreach my $name (qw/bob sally elon ricardo/) {
+    cmp_deeply get_customer($name), \%expected,
+      "customer '$name' should return reasonable results";
+}
+
+sub non_empty_string {
+    local $_ = shift;
+    return 1 if defined && !ref($_) && /\S/;
+    return 0, "Must be a string with one non-whitespace character";
+}
 
 done_testing;
