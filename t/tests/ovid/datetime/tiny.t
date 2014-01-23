@@ -3,6 +3,14 @@ use Ovid::DateTime::Tiny;
 use Sub::Override;
 my $module = 'Ovid::DateTime::Tiny';
 
+fail <<'END';
+
+Break this into two subtests. The first should test the constructor,
+new(), and the second should test now()
+
+END
+
+# start the subtest for new()
 can_ok $module, 'new';
 my $datetime = $module->new(
     year => 2006, month  => 12, day    => 25,
@@ -12,10 +20,12 @@ isa_ok $datetime, $module;
 is $datetime->as_string, '2006-12-25T10:45:00',
   "as_string() should return the correct datetime";
 
+# start the subtest for now()
 my %args_for_now = (
     year => 2011, month  => 4,  day    => 23,
     hour => 18,   minute => 22, second => 4,
 );
+
 my $override = Sub::Override->new(
     "${module}::now" => sub { $module->new(%args_for_now) },
 );
