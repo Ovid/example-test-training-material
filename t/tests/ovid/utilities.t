@@ -1,4 +1,6 @@
+use lib 't/lib';
 use Test::Most;
+use Ovid::Tests;
 
 use Ovid::Utilities ':all';
 use Capture::Tiny 'capture';
@@ -18,15 +20,5 @@ subtest 'Using Capture::Tiny' => sub {
     like $stderr, qr/^This goes to STDERR/,       '... as should our STDERR';
     eq_or_diff \@result, [42], '... and out result';
 };
-
-sub confirm {
-    my $text = shift;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    diag "$text [y/N]";
-    my $response = <STDIN>;
-    $response =~ /^y/i
-      ? pass("Passed test: $text")
-      : fail("Failed test: $text");
-}
 
 done_testing;
