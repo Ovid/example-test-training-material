@@ -7,6 +7,7 @@ version 1.0;
 
 requires 'DateTime'              => '1.03';
 requires 'JSON'                  => '2.90';
+requires 'Plack'                 => '1.0030';
 test_requires 'Capture::Tiny'    => '0.23';
 test_requires 'File::Find::Rule' => '0.33';
 test_requires 'Sub::Override'    => '0.09';
