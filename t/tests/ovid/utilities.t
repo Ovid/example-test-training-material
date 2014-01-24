@@ -1,7 +1,6 @@
 use lib 't/lib';
 use Test::Most;
 use Ovid::Tests;
-
 use Ovid::Utilities ':all';
 use Capture::Tiny 'capture';
 
@@ -10,8 +9,8 @@ SKIP: {
       if 'MSWin32' eq $^O;
     skip "Skipping manual confirmation because test is not verbose", 2
       unless $ENV{TEST_VERBOSE};
-    confirm( red("Is this text red?") );
-    confirm( green("Is this text green?") );
+    confirm_ok red("Is this text red?"),     'We should see red text';
+    confirm_ok green("Is this text green?"), 'We should see green text';
 }
 
 subtest 'Using Capture::Tiny' => sub {
