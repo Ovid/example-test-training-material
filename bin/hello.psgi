@@ -1,9 +1,6 @@
 use strict;
 use warnings;
-use Plack::Builder;
-use Ovid::Web::Hello ':all';
+use Ovid::Web::Hello 'psgi_app';
 
-builder {
-    mount '/'          => hello();
-    mount '/style.css' => style();
-}
+psgi_app;
+

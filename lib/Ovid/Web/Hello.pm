@@ -2,7 +2,15 @@ use strict;
 use warnings;
 
 package Ovid::Web::Hello;
-use Ovid::Exporter qw( hello style );
+use Plack::Builder;
+use Ovid::Exporter qw( psgi_app );
+
+sub psgi_app {
+    builder {
+        mount '/'          => hello();
+        mount '/style.css' => style();
+    }
+}
 
 sub hello {
     return sub {
@@ -33,7 +41,7 @@ sub style {
     return sub {
         my $css = <<'END';
 body { background-color: black }
-p    { color: white }
+p    { color:            white }
 END
         return [
             200,
