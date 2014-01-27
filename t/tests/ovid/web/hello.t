@@ -5,20 +5,15 @@ use Test::WWW::Mechanize::PSGI;
 
 my $mech = Test::WWW::Mechanize::PSGI->new( app => psgi_app() );
 $mech->get_ok( '/', 'We can fetch "/"' );
-diag $mech->dump_headers;
-
-fail(<<'END');
-
-	You'll want to read this to see what test methods you can use:
-
-		perldoc Test::WWW::Mechanize
-
-	Write tests to verify:
-
-	1. That the page title is OK.
-	2. That we can fetch the CSS.
-	3. That URLs we don't expect return a status of 404
-	4. Anything else you can think of.
-END
+$mech->title_is( 'Hello, World!',
+    '... and it should have the correct title' );
+$mech->page_links_ok('... and all links on the page should be valid');
+$mech->get_ok( '/style.css', 'We can fetch our CSS' );
+$mech->content_like(
+    qr/background-color/,
+    '... and it should look reasonable'
+);
+$mech->get('/bad_link');
+is $mech->status, 404, 'Fetching unknown links should return a 404';
 
 done_testing;
