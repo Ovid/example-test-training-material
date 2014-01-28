@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>The Awesome "This does nothing!" Game</title>
+  </head>
+  <body>
+    <fieldset>
+[% IF no_character_found %]
+      <legend>Create your character</legend>
+      <p>
+        <a href="/character">Click here to create a character</a>
+      </p>
+[% ELSE %]
+      <legend>Character Stats</legend>
+      <table style="border-spacing:5px;">
+        <tr><td>Name</td><td>[% character.name %]</td></tr>
+        <tr><td>Profession</td><td>[% character.profession %]</td></tr>
+        <tr><td>Birth place</td><td>[% character.birthplace %]</td></tr>
+        <tr><td>Strength</td><td>[% character.strength %]</td></tr>
+        <tr><td>Intelligence</td><td>[% character.intelligence %]</td></tr>
+        <tr><td>Health</td><td>[% character.health %]</td></tr>
+      </table>
+      <p>
+        <a href="/character">Click here to generate another character.</a>
+      </p>
+[% END %]
+    </fieldset>
+  </body>
+</html>
