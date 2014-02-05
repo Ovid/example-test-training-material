@@ -20,16 +20,10 @@ my %expected = (
     customer_id => re('^\d{6}'),
     name        => code( \&non_empty_string ),
     age         => code( sub { shift >= 21 } ),
+    active      => any( 1, 0 ),
+    categories  => array_each( code( \&non_empty_string ) ),
 );
 
-diag <<'END';
-
-We have four failing tests here. Your task is to read through the
-documentation of Test::Deep to figure out how to make these tests pass.
-
-Don't use re() to match the "active" value in the returned data structure.
-
-END
 foreach my $name (qw/bob sally elon ricardo/) {
     cmp_deeply get_customer($name), \%expected,
       "customer '$name' should return reasonable results";
