@@ -3,6 +3,14 @@ use Ovid::DateTime::Tiny;
 use Sub::Override;
 my $module = 'Ovid::DateTime::Tiny';
 
+fail(<<'END');
+
+    See how much you can improve the code coverage on Ovid::DateTime::Tiny
+
+    This is sometimes tricky because this requires reading and understanding
+    the code and it's not always clear why the code is doing what it does.
+END
+
 subtest 'Constructor' => sub {
     can_ok $module, 'new';
     my $datetime = $module->new(
