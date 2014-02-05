@@ -3,32 +3,42 @@ use Try::Tiny;
 use Capture::Tiny ':all';
 require 'bin/get_html_comments.pl';
 
-my ( $stdout, $stderr, @response ) = capture {
-    try { Modulino::HTMLComments->run() } catch { warn $_ };
-};
-like $stderr,
-  qr{\QUsage: t/bin/get_html_comments.t http://www.example.com/},
-  'Need a URL to fetch comments';
+SKIP: {
+    skip 'No internet access'
+      unless Modulino::HTMLComments->have_internet;
+    my ( $stdout, $stderr, @response ) = capture {
+        try { Modulino::HTMLComments->run() } catch { warn $_ };
+    };
+    like $stderr,
+      qr{\Qget_html() requires a URL },
+      'Need a URL to fetch comments';
 
-( $stdout, $stderr, @response ) = capture {
-    Modulino::HTMLComments->run('http://www.reddit.com');
-};
-like $stdout, qr/--IE6sux--/, 'Our comments should look reasonable';
+    ( $stdout, $stderr, @response ) = capture {
+        Modulino::HTMLComments->run('http://www.reddit.com');
+    };
+    like $stdout, qr/--IE6sux--/, 'Our comments should look reasonable';
 
-fail <<'END';
+    # this test is fragile because it requires that reddit be up, but it's for
+    # example purposes
+    my $html = Modulino::HTMLComments->get_html('http://www.reddit.com');
+    like $html, qr{<title>.*</title>}s, 'We should be able to fetch HTML';
+}
 
-    We've managed to test our script, so now we need to clean it up. Instead
-    of a single 'run' method, the structure of the script should look like
-    this:
-
-        sub run          {...}
-        sub get_html     {...}
-        sub get_comments {...}
-
-    Once you have enough tests in place to feel comfortable with how your
-    script performs, refactor it into the above functions and write tests for
-    them separately.
-
+my $html = <<'END';
+<html>
+    <head><title>This is a title page</title></head>
+    <body>
+        <p>This is text</p>
+        <!-- this is a comment -->
+        <p>This is more text</p>
+        <!-- this is another comment -->
+    </body>
+</html>
 END
+
+my @comments = Modulino::HTMLComments->get_comments($html);
+eq_or_diff \@comments,
+  [ '<!-- this is a comment -->', '<!-- this is another comment -->' ],
+  'get_comments() should return HTML comments';
 
 done_testing;
