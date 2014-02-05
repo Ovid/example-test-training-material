@@ -3,7 +3,10 @@ use warnings;
 
 use Test::More;
 eval "use Ovid::Telepathy";
-plan skip_all => "Ovid::Telepathy cannot be loaded: $@" if $@;
+
+# Oridinarily we'd print the error message too ($@), but we want our test
+# output to be succint during training.
+plan skip_all => "Ovid::Telepathy cannot be loaded" if $@;
 
 ok my $telepathy = Ovid::Telepathy->new,
   'We should be able to create a new telephathy module';
