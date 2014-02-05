@@ -14,27 +14,41 @@ $mech->get('/bad_link');
 is $mech->status, 404, 'Fetching unknown links should return a 404';
 
 $mech->get_ok( '/character', 'We should be able to get the character page' );
-
-fail(<<'END');
-
-	This is the refactoring exercise. To run the app, you can type
-
-		plackup --port $port bin/character.psgi
-	
-	Then navigate to http://localhost:$port/ and create a game character. Look
-	to see what errors you get if you omit fields.
-
-	The code is very poorly structured. Write tests to make sure you've nailed
-	down behavior and then separate the code loosely into a MVC
-	(Model-View-Controller) system.
-
-	The templates (HTML) should be in separate files that you read in.
-
-	The character generation data should be in a separate files, but a
-	separate subroutine is fine for this example. The app logic should be
-	relatively small.
-
-	This exercise will take longer than the others.
-END
+$mech->title_is( 'Character Generation', '...  and have the correct title' );
+$mech->content_like(
+    qr/Create your character/,
+    '... and the content should look reasonable'
+);
+$mech->submit_form_ok(
+    {   form_name => 'awesome',
+        fields    => {
+            name       => 'Bob',
+            profession => 'pilot',
+        },
+    },
+    '... and we should be able to submit the form'
+);
+$mech->content_like(
+    qr/BIRTHPLACE IS REQUIRED/,
+    '... but we should get an error if missed a field'
+);
+$mech->submit_form_ok(
+    {   form_name => 'awesome',
+        fields    => {
+            name       => 'Bob',
+            profession => 'pilot',
+            birthplace => 'earth',
+        },
+    },
+    'We should be able to resubmit the form'
+);
+$mech->content_like( qr/Character Stats/,    '... and get to a stats page' );
+$mech->content_like( qr/Name.*Bob/,          '... and see the name' );
+$mech->content_like( qr/Profession.*Pilot/,  '... and the profession' );
+$mech->content_like( qr/Birth place.*Earth/, '... and the birth place' );
+$mech->content_like( qr/Strength.*\d+/, '... and the generated strength' );
+$mech->content_like( qr/Intelligence.*\d+/,
+    '... and the generated intelligence' );
+$mech->content_like( qr/Health.*\d+/, '... and the generated health' );
 
 done_testing;

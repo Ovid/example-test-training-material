@@ -1,0 +1,41 @@
+<html>
+  <head><title>Character Generation</title></head>
+  <body>
+    <fieldset>
+      <legend>Create your character</legend>
+[% FOREACH error IN errors %]
+      <p style="color:red; font-weight:bold">[% error %]</p>
+[% END %]
+      <form action="/" method="POST" name="awesome">
+        <table>
+          <tr><td>Name</td>
+            <td>
+              <input type="text" name="name" value="[% character.name %]" />
+            </td>
+          </tr>
+          <tr>
+            <td>Profession</td>
+            <td>
+              <select name="profession">
+                <option value="programmer">Programmer</option>
+                <option value="pilot">Starship Pilot</option>
+                <option value="redshirt">Security Officer</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>Birth place</td>
+            <td>
+              Earth <input type="radio" name="birthplace" value="earth" /> |
+              Mars <input type="radio" name="birthplace" value="mars" /> |
+              Vat 3-5LX <input type="radio" name="birthplace" value="vat" />
+            </td>
+          </tr>
+        </table>
+        <div align="center">
+          <input type="submit" value="Submit" />
+        </div>
+      </form>
+    </fieldset>
+  </body>
+</html>
