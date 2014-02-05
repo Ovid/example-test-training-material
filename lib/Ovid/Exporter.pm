@@ -15,7 +15,7 @@ sub import {
     no strict 'refs';
     push @{"${calling_package}::ISA"} => 'Exporter';
     @{"${calling_package}::EXPORT_OK"} = @subs;
-    %{"${calling_package}::EXPORT_OK"} = ( all => \@subs );
+    %{"${calling_package}::EXPORT_TAGS"} = ( all => \@subs );
 }
 
 1;
