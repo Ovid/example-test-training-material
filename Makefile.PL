@@ -6,6 +6,7 @@ name 'Ovid';
 version 1.0;
 
 requires 'DateTime'              => '1.03';
+requires 'JSON'                  => '2.90';
 test_requires 'File::Find::Rule' => '0.33';
 test_requires 'Sub::Override'    => '0.09';
 test_requires 'Test::Exception'  => '0.32';
