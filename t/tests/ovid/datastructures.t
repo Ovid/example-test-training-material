@@ -1,9 +1,4 @@
-use strict;
-use warnings;
-use Test::More;
-use Test::Differences;
-use Test::Deep;
-
+use Test::Most;
 use Ovid::DataStructures qw(:all);
 
 my $json = '{"foo":"bar","abc":[1,2,[3,2]],"baz":"quux"}';
@@ -18,7 +13,7 @@ eq_or_diff from_json($json), \%expected, 'JSON should deserialize correctly';
 eq_or_diff get_customer('unknown'), {},
   'get_customer() should return an empty hashref for unknown customers';
 
-my %expected = (
+%expected = (
     customer_id => re('^\d{6}'),
     name        => code( \&non_empty_string ),
     age         => code( sub { shift >= 21 } ),

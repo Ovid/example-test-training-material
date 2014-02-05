@@ -1,7 +1,4 @@
-use strict;
-use warnings;
-
-use Test::More;
+use Test::Most;
 
 {
     BEGIN { $INC{'Example.pm'} = 1; }    # stop "use" from breaking
