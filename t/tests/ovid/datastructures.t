@@ -9,9 +9,12 @@ my %expected = (
     abc => [ 1, 2, [ 3, 2 ] ],
 );
 
-eq_or_diff from_json($json), \%expected, 'JSON should deserialize correctly';
-eq_or_diff get_customer('unknown'), {},
-  'get_customer() should return an empty hashref for unknown customers';
+subtest 'test_json' => sub {
+    eq_or_diff from_json($json), \%expected,
+      'JSON should deserialize correctly';
+    eq_or_diff from_json( to_json( \%expected ) ), \%expected,
+      'JSON should round-trip successfully';
+};
 
 %expected = (
     customer_id => re('^\d{6}'),
@@ -21,10 +24,16 @@ eq_or_diff get_customer('unknown'), {},
     categories  => array_each( code( \&non_empty_string ) ),
 );
 
-foreach my $name (qw/bob sally elon ricardo/) {
-    cmp_deeply get_customer($name), \%expected,
-      "customer '$name' should return reasonable results";
-}
+subtest 'get_customer()' => sub {
+    plan tests => 5;
+    eq_or_diff get_customer('unknown'), {},
+      'get_customer() should return an empty hashref for unknown customers';
+
+    foreach my $name (qw/bob sally elon ricardo/) {
+        cmp_deeply get_customer($name), \%expected,
+          "customer '$name' should return reasonable results";
+    }
+};
 
 sub non_empty_string {
     local $_ = shift;
