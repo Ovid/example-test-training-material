@@ -4,10 +4,24 @@ use strict;
 use warnings;
 use Ovid::Exporter qw(reduce min max roll_dice);
 
+# the forward declaration is necessary to ensure that the the parser
+# correction interprets the first argument to the reduce() function in min()
+# as a coderef and not a hashref. You're not necessarily expected to know
+# this and so long as your test pass, all is well.
+sub reduce(&@);
+
 sub min {
+    my $min = $_[0];
+    foreach my $number (@_) {
+        $min = $number if $min > $number;
+    }
+    return $min;
 }
 
 sub max {
+    # writing this in a different style from min() to show different ways of
+    # approaching a problem.
+    return reduce { $_[0] > $_[1] ? $_[0] : $_[1] } @_;
 }
 
 sub reduce(&@) {
@@ -19,8 +33,14 @@ sub reduce(&@) {
 
 sub roll_dice {
     my $arg_for = shift;
-    my $sides   = $arg_for->{sides} || 6;
-    my $times   = $arg_for->{times} || 1;
+
+    my $sides = $arg_for->{sides} || 6;
+    my $times = $arg_for->{times} || 1;
+
+    # we could have also chosen to croak() or throw an exception here
+    $sides = 6 if $sides < 2;
+    $times = 1 if $times < 1;
+
     return reduce(
         sub { $_[0] + $_[1] },
         map { 1 + int rand $sides } 1 .. $times
