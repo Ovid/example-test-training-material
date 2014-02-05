@@ -12,16 +12,22 @@ isa_ok $datetime, $module;
 is $datetime->as_string, '2006-12-25T10:45:00',
   "as_string() should return the correct datetime";
 
+my %args_for_now = (
+    year => 2011, month  => 4,  day    => 23,
+    hour => 18,   minute => 22, second => 4,
+);
 my $override = Sub::Override->new(
-    "${module}::now" => sub {
-        $module->new( die "make this work and write better tests" );
-    }
+    "${module}::now" => sub { $module->new(%args_for_now) },
 );
 my $now = $module->now;
 
+while ( my ( $method, $value ) = each %args_for_now ) {
+    is $now->$method, $value, "$method should return the correct value";
+}
+
 my $datetime = $now->DateTime;
 isa_ok $datetime, 'DateTime';
-foreach (qw/year month day hour minute second/) {
+foreach (keys %args_for_now) {
     is $datetime->$_, $now->$_,
       "... and DateTime->$_ should return the same value as $module->$_";
 }
