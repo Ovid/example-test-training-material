@@ -20,8 +20,13 @@ sub confirm_ok($;$) {
       : builder->ok( 0, $message // "Failed test: $text" );
 }
 
+# XXX For extra credit, you could install Test::Tester and write tests to
+# verify that these tests work
 sub in_range_ok($$$;$) {
-    builder->ok( 0, 'make these tests pass' );
+    my ( $result, $min, $max, $message ) = @_;
+    $message //= "$result should be between $min and $max";
+    my $passed = $result >= $min && $result <= $max;
+    builder->ok( $passed, $message );
 }
 
 1;
