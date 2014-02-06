@@ -176,3 +176,15 @@ can't fly to France for training, or who can't bring me to your location may
 still get some value out of this. Like I explained earlier, this is a
 marketing experiment: how can we give back to the community but still build
 our business? If this works, perhaps there will be more.
+
+# BUILDING
+
+The `Makefile.PL` script should be run to install the dependencies needed for
+this training. If you have trouble installing `Net::Ping::External`, don't
+worry about it. It's for the last lesson in this sample.
+
+You just need to do this:
+
+    perl Makefile.PL
+    # accept the prompt to Auto-install the X mandatory module(s) from CPAN?
+    make # this will run cpan to install the modules
