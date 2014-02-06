@@ -5,9 +5,14 @@ use inc::Module::Install;
 name 'Ovid';
 version 1.0;
 
+# note that Net::Ping::External is only required for the very last lesson.
+# Some people have problems installing it. If you can't install it, don't
+# worry about it.
+
 requires 'DateTime'                        => '1.03';
 requires 'HTML::TokeParser::Simple'        => '3.16';
 requires 'JSON'                            => '2.90';
+requires 'Net::Ping::External'             => '0.14';
 requires 'Plack'                           => '1.0030';
 requires 'Devel::Cover'                    => '1.08';
 test_requires 'Capture::Tiny'              => '0.23';
