@@ -2,6 +2,11 @@
 
 Sample Code From Ovid's Introductory Testing Course
 
+# TAGS
+
+Yeah, I forgot to push the tags the first time. That's something about git
+that really annoys me.
+
 # LICENSE
 
 Releasing this code is an experiment in trying to balance giving back to the
