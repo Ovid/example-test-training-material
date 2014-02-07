@@ -107,7 +107,7 @@ To see the manual work, you can do this (note that lessons come before exams):
 
 To work through this, you can:
 
-    $ git checkout lesson-1.1
+    $ git checkout tags/lesson-1.1
     ...
     $ prove -rl t
     t/math.t .. Undefined subroutine &main::sum called at t/math.t line 7.
@@ -127,12 +127,12 @@ And then try to make the tests pass and add extra tests as you feel
 appropriate. If you're curious about the approach used in class, you can do
 this:
 
-    git checkout lesson-1.1-answer
+    git checkout tags/lesson-1.1-answer
 
 As we move forward through the course, the failures will be more verbose and
 better explanations of what is needed are provided:
 
-    $ git checkout lesson-2.1
+    $ git checkout tags/lesson-2.1
     Previous HEAD position was b63f861... A diag() message to make the desired result clearer.
     HEAD is now at 4446a1b... A bad example of testing a complex data structure
     05:00:04 {(lesson-2.1)} ~/allaroundtheworld.fr/training/testing/code $ prove -rl t
